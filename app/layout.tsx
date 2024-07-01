@@ -1,8 +1,9 @@
+import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const dmSans = DM_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Rivera Vans",
@@ -16,7 +17,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className={inter.className}>{children}</body>
+      <body className={dmSans.className}>
+        {children}
+        <Toaster />
+      </body>
     </html>
   );
 }
