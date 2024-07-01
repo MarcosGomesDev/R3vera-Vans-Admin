@@ -3,6 +3,9 @@ import * as React from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { EyeIcon, EyeOff } from "lucide-react";
+import { twMerge } from "tailwind-merge";
+import { Button } from "./button";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -10,14 +13,54 @@ export interface InputProps
 }
 
 const FloatingInput = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, error, ...props }, ref) => {
+  ({ className, error, type, ...props }, ref) => {
+    const [showPassword, setShowPassword] = React.useState<boolean>(false);
+
+    const isPassword = type === "password";
+
     return (
-      <Input
-        placeholder=" "
-        className={cn("peer", error ? "!border-red-500" : "", className)}
-        ref={ref}
-        {...props}
-      />
+      <>
+        <Input
+          placeholder=" "
+          type={isPassword ? (showPassword ? "text" : "password") : type}
+          className={cn(
+            "peer flex-auto",
+            error ? "!border-red-500" : "",
+            className,
+            isPassword ? "pr-10" : "",
+          )}
+          ref={ref}
+          {...props}
+        />
+        {isPassword && (
+          <Button
+            type="button"
+            variant="ghost"
+            className="absolute right-0 top-0 hover:bg-transparent"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? (
+              <>
+                <EyeOff
+                  className={twMerge([
+                    "size-5 text-primary hover:opacity-80 dark:text-primary",
+                    error ? "text-red-500" : "",
+                  ])}
+                />
+              </>
+            ) : (
+              <>
+                <EyeIcon
+                  className={twMerge([
+                    "size-5 text-primary hover:opacity-80 dark:text-slate-400",
+                    error ? "text-red-500" : "",
+                  ])}
+                />
+              </>
+            )}
+          </Button>
+        )}
+      </>
     );
   },
 );
@@ -49,16 +92,24 @@ FloatingLabel.displayName = "FloatingLabel";
 export type FloatingLabelInputProps = InputProps & {
   label?: string;
   error?: unknown;
+  inputClassName?: React.HTMLAttributes<HTMLInputElement>["className"];
+  labelClassName?: React.HTMLAttributes<HTMLLabelElement>["className"];
 };
 
 const FloatingLabelInput = React.forwardRef<
   React.ElementRef<typeof FloatingInput>,
   React.PropsWithoutRef<FloatingLabelInputProps>
->(({ id, label, error, ...props }, ref) => {
+>(({ id, label, error, inputClassName, labelClassName, ...props }, ref) => {
   return (
     <div className="relative">
-      <FloatingInput error={error} ref={ref} id={id} {...props} />
-      <FloatingLabel htmlFor={id} error={error}>
+      <FloatingInput
+        error={error}
+        ref={ref}
+        id={id}
+        className={inputClassName}
+        {...props}
+      />
+      <FloatingLabel htmlFor={id} error={error} className={labelClassName}>
         {label}
       </FloatingLabel>
     </div>
