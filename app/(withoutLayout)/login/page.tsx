@@ -20,6 +20,9 @@ export default function LoginPage({
     <div className="flex h-screen">
       <div className="flex h-screen w-full flex-col items-center justify-center bg-primary-foreground lg:w-1/2 lg:bg-background">
         <Form redirect_to={redirect_to} />
+        <p className="fixed bottom-10 text-xs text-gray-400">
+          &copy; 2024 Gomes Tech. Todos os direitos reservados.
+        </p>
       </div>
       <div className="hidden h-screen w-1/2 justify-center rounded-bl-[8rem] bg-gradient-to-b from-black from-10% via-red-950 via-50% to-primary to-90% lg:flex">
         <Image
