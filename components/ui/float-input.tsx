@@ -25,7 +25,7 @@ const FloatingInput = React.forwardRef<HTMLInputElement, InputProps>(
           type={isPassword ? (showPassword ? "text" : "password") : type}
           className={cn(
             "peer flex-auto",
-            error ? "!border-red-500" : "",
+            error ? "!border-red-500 focus-visible:ring-red-500" : "",
             className,
             isPassword ? "pr-10" : "",
           )}
@@ -43,7 +43,7 @@ const FloatingInput = React.forwardRef<HTMLInputElement, InputProps>(
               <>
                 <EyeOff
                   className={twMerge([
-                    "size-5 text-primary hover:opacity-80 dark:text-primary",
+                    "size-5 text-slate-300 hover:opacity-80 dark:text-input",
                     error ? "text-red-500" : "",
                   ])}
                 />
@@ -52,7 +52,7 @@ const FloatingInput = React.forwardRef<HTMLInputElement, InputProps>(
               <>
                 <EyeIcon
                   className={twMerge([
-                    "size-5 text-primary hover:opacity-80 dark:text-slate-400",
+                    "size-5 text-slate-300 hover:opacity-80 dark:text-slate-400",
                     error ? "text-red-500" : "",
                   ])}
                 />
@@ -78,7 +78,7 @@ const FloatingLabel = React.forwardRef<
   return (
     <Label
       className={cn(
-        "peer-focus:secondary peer-focus:dark:secondary absolute start-2 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform border-input bg-background px-2 text-sm text-gray-500 !ring-0 duration-300 focus-within:border-primary focus:ring-0 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-primary dark:bg-background dark:peer-focus:text-slate-400 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4",
+        "peer-focus:secondary peer-focus:dark:secondary absolute start-2 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform border-input bg-background px-2 text-sm text-gray-500 !ring-0 duration-300 focus-within:border-black focus:ring-0 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-black dark:bg-background dark:peer-focus:text-slate-400 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4",
         error ? "!border-red-500 !text-red-500" : "",
         className,
       )}
