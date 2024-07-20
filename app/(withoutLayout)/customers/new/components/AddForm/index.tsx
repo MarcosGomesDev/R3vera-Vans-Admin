@@ -36,6 +36,8 @@ export function AddForm({ id }: AddFormProps) {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const isEditable = id;
+
   const {
     control,
     register,
@@ -96,7 +98,7 @@ export function AddForm({ id }: AddFormProps) {
     <div className="flex w-full flex-col space-y-3">
       <form
         onSubmit={handleSubmit(clientAction)}
-        className="flex w-full flex-col space-y-3 rounded-lg bg-background p-5 px-6 shadow-md"
+        className="flex w-full flex-col space-y-4 rounded-lg bg-background p-5 px-6 shadow-md"
       >
         <div className="flex w-full items-center justify-between">
           <p className="font-semibold">Nome do cliente</p>
@@ -108,72 +110,75 @@ export function AddForm({ id }: AddFormProps) {
             error={errors.name?.message}
           />
         </div>
+        {isEditable && (
+          <div className="mt-5 flex flex-col">
+            <div className="mb-4 flex items-center justify-between">
+              <p className="font-semibold">Buzinas</p>
+              <Button
+                className="size-10 rounded-full text-2xl font-light"
+                type="button"
+                variant="outline"
+                onClick={handleAddSound}
+              >
+                +
+              </Button>
+            </div>
 
-        <div className="flex flex-col space-y-2">
-          <p className="font-semibold">Buzinas</p>
-
-          <Accordion type="single" className="flex flex-col" collapsible>
-            {fields.map((field, index) => (
-              <AccordionItem value={`item-${index + 1}`} key={index}>
-                <AccordionTrigger className="font-semibold">
-                  Buzina {index + 1}
-                </AccordionTrigger>
-                <AccordionContent className="flex flex-col space-y-3 px-3 pt-2">
-                  <div className="flex items-center justify-between">
-                    <Label>Nome</Label>
-                    <FloatingLabelInput
-                      label="Nome"
-                      type="text"
-                      className="w-[340px]"
-                      {...register(`sounds.${index}.name`)}
-                      error={errors.sounds?.[index]?.name?.message}
-                    />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <Label>Link</Label>
-                    <FloatingLabelInput
-                      label="Link"
-                      type="text"
-                      className="w-[340px]"
-                      {...register(`sounds.${index}.link`)}
-                      error={errors.sounds?.[index]?.link?.message}
-                    />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <Label>Tipo</Label>
-                    <Select>
-                      <SelectTrigger className="w-[340px]">
-                        <SelectValue placeholder="Selecione um tipo" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectItem value="default">Padrão</SelectItem>
-                          <SelectItem value="funny">Divertida</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <Button
-                    className="h-10 self-end rounded-xl align-top font-bold"
-                    type="button"
-                    variant="destructive"
-                    onClick={() => remove(index)}
-                  >
-                    Remover
-                  </Button>
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-            <Button
-              className="mt-4 h-10 self-end rounded-xl align-top font-bold"
-              type="button"
-              variant="outline"
-              onClick={handleAddSound}
-            >
-              Adicionar
-            </Button>
-          </Accordion>
-        </div>
+            <Accordion type="single" className="flex flex-col" collapsible>
+              {fields.map((field, index) => (
+                <AccordionItem value={`item-${index + 1}`} key={index}>
+                  <AccordionTrigger className="font-semibold">
+                    Buzina {index + 1}
+                  </AccordionTrigger>
+                  <AccordionContent className="flex flex-col space-y-3 px-3 pt-2">
+                    <div className="flex items-center justify-between">
+                      <Label>Nome</Label>
+                      <FloatingLabelInput
+                        label="Nome"
+                        type="text"
+                        className="w-[340px]"
+                        {...register(`sounds.${index}.name`)}
+                        error={errors.sounds?.[index]?.name?.message}
+                      />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <Label>Link</Label>
+                      <FloatingLabelInput
+                        label="Link"
+                        type="text"
+                        className="w-[340px]"
+                        {...register(`sounds.${index}.link`)}
+                        error={errors.sounds?.[index]?.link?.message}
+                      />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <Label>Tipo</Label>
+                      <Select>
+                        <SelectTrigger className="w-[340px]">
+                          <SelectValue placeholder="Selecione um tipo" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value="default">Padrão</SelectItem>
+                            <SelectItem value="funny">Divertida</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <Button
+                      className="h-10 self-end rounded-xl align-top font-bold"
+                      type="button"
+                      variant="destructive"
+                      onClick={() => remove(index)}
+                    >
+                      Remover
+                    </Button>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        )}
       </form>
       <div className="flex w-1/2 gap-3 self-end">
         <Button
