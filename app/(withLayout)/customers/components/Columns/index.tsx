@@ -13,12 +13,50 @@ import {
 import { CaretSortIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
 import { CircleCheckBigIcon, CircleXIcon } from "lucide-react";
+import { useDialog } from "../Authorization/authorization";
 
 export type Customer = {
   id: string;
   name: string;
   authorized: boolean;
   createdAt: string;
+};
+
+const ActionsCell: React.FC = () => {
+  const { showDialog } = useDialog();
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="size-8 p-0">
+          <span className="sr-only">Abrir menu</span>
+          <DotsHorizontalIcon className="size-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>Ações</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="hover:cursor-pointer hover:underline">
+          Ver
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="hover:cursor-pointer hover:underline">
+          Editar
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="hover:cursor-pointer hover:underline">
+          Excluir
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          className="hover:cursor-pointer hover:underline"
+          onClick={showDialog}
+        >
+          Autorizar
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
 };
 
 export const columns: ColumnDef<Customer>[] = [
@@ -97,36 +135,6 @@ export const columns: ColumnDef<Customer>[] = [
     id: "actions",
     enableHiding: false,
     header: "Ações",
-    cell: () => {
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="size-8 p-0">
-              <span className="sr-only">Abrir menu</span>
-              <DotsHorizontalIcon className="size-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="hover:cursor-pointer hover:underline">
-              Ver
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="hover:cursor-pointer hover:underline">
-              Editar
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="hover:cursor-pointer hover:underline">
-              Excluir
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="hover:cursor-pointer hover:underline">
-              Autorizar
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
+    cell: ActionsCell,
   },
 ];

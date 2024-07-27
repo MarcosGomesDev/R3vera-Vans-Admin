@@ -173,14 +173,22 @@ export function DataTable<TData, TValue>({
         )}
       </div>
       <div className="flex items-center justify-between space-x-2 py-4">
-        <div className="text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} de{" "}
-          {table.getFilteredRowModel().rows.length} linha(s) selecionada(s).
-        </div>
-        <span className="text-sm text-muted-foreground">
-          Página {table.getState().pagination.pageIndex + 1} de{" "}
-          {table.getPageCount()}
-        </span>
+        {table.getFilteredSelectedRowModel().rows.length > 0 ? (
+          <div className="text-sm text-muted-foreground">
+            {table.getFilteredSelectedRowModel().rows.length} de{" "}
+            {table.getFilteredRowModel().rows.length} linha(s) selecionada(s).
+          </div>
+        ) : (
+          <div />
+        )}
+        {table.getPageCount() > 0 ? (
+          <span className="text-sm text-muted-foreground">
+            Página {table.getState().pagination.pageIndex + 1} de{" "}
+            {table.getPageCount()}
+          </span>
+        ) : (
+          <div />
+        )}
         <div className="space-x-2">
           <Button
             variant="outline"

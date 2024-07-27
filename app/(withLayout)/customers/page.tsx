@@ -1,3 +1,4 @@
+import { Authorization } from "./components/Authorization";
 import { columns, Customer } from "./components/Columns";
 import { DataTable } from "./components/DataTable";
 
@@ -32,6 +33,7 @@ export default async function CustomersPage() {
   return (
     <div className="container mx-auto py-10">
       <DataTable columns={columns} data={data} />
+      <Authorization />
     </div>
   );
 }
